@@ -2,7 +2,10 @@
 
 int main(int argc, char **argv)
 {
-    validate_map();
+    if(argc != 2)
+        handle_error(1, WRONG_ARGUMENTS);
+    validate_map(argv[1]);
+    return (0);
 }
 
 // int main(int argc, char **argv)

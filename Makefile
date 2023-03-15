@@ -10,7 +10,7 @@ LIBS   = -I./includes/ -I./mlx/
 # Compiled directories
 SRC = src
 OBJ = obj
-SUBDIRS = game validation gnl maps
+SUBDIRS = game validation gnl maps utils
 
 # Folder directions
 SRC_DIR = $(foreach dir, $(SUBDIRS), $(addprefix $(SRC)/, $(dir)))
