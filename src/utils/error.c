@@ -23,7 +23,8 @@ void handle_error(int exit_code, char *type)
 		ft_putstr_fd("Please write correct file type: {map_name}.ber\n", 2);
 	else if(!ft_strcmp(type, WRONG_ARGUMENTS))
 		ft_putstr_fd("Too few arguments!\n", 2);
-	else
-		ft_putstr_fd("Unexpected error.\n", 2);
+	else if (!ft_strcmp(type, WRONG_MAP_CONF))
+		ft_putstr_fd("Please fill map correctly!\n", 2);
+	else ft_putstr_fd("Unexpected error.\n", 2);
 	exit(exit_code);
 }

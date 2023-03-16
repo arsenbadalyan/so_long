@@ -17,13 +17,17 @@
 // Error type defines
 #define WRONG_EXTENTION "wfe"
 #define WRONG_ARGUMENTS "wae"
+#define WRONG_MAP_CONF  "wmc"
 // Functions
 
 // Validations
 void validate_map(char *file_name);
 void check_file_extention(char *file_name);
-void check_file_access(char *file_name);
-void map_check_controller(int fd);
+int file_access(char *file_name);
+void map_check_controller(char *file_name, int fd);
+size_t check_map_size(int fd, size_t size, size_t length);
+void free_line_and_exit(char **line);
+char **fill_map(size_t map_size, int fd);
 
 // Error handle
 void catch_exception(int errno, char *addn);

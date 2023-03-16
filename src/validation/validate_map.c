@@ -6,15 +6,8 @@ void validate_map(char *file_name)
 	char *full_path;
 
 	check_file_extention(file_name);
-	check_file_access(file_name);
-	full_path = ft_strjoin(MAP_PATH, file_name);
-	if(!full_path)
-		catch_exception(12, 0);
-	fd = open(full_path, O_RDONLY);
-	free_single(&full_path);
-	if(fd == -1)
-		catch_exception(2, file_name);
-	map_check_controller(fd);
+	fd = file_access(file_name);
+	map_check_controller(file_name, fd);
 }
 
 void check_file_extention(char *file_name)
@@ -41,7 +34,7 @@ void check_file_extention(char *file_name)
 	free_double(&dot_split);
 }
 
-void file_access(char *file_name)
+int file_access(char *file_name)
 {
 	int fd;
 	char *full_path;
@@ -51,7 +44,6 @@ void file_access(char *file_name)
 		catch_exception(12, 0);
 	fd = open(full_path, O_RDONLY);
 	free_single(&full_path);
-	close(fd);
 	if(fd == -1)
 		catch_exception(2, file_name);
 	return (fd);
