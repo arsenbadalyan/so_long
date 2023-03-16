@@ -25,6 +25,11 @@ void handle_error(int exit_code, char *type)
 		ft_putstr_fd("Too few arguments!\n", 2);
 	else if (!ft_strcmp(type, WRONG_MAP_CONF))
 		ft_putstr_fd("Please fill map correctly!\n", 2);
+	else if (!ft_strcmp(type, WRONG_WALL_CONF))
+		ft_putstr_fd("Please set correct wall configuration!\n", 2);
+	else if (!ft_strcmp(type, WRONG_PE_CONF))
+		ft_putstr_fd("Please check if you set correct flags: [1, 0, P (one), E (one), C, V]\n", 2);
 	else ft_putstr_fd("Unexpected error.\n", 2);
-	exit(exit_code);
+	if(exit_code)
+		exit(exit_code);
 }

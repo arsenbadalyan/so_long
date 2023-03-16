@@ -2,10 +2,13 @@
 
 int main(int argc, char **argv)
 {
-    if(argc != 2)
-        handle_error(1, WRONG_ARGUMENTS);
-    validate_map(argv[1]);
-    return (0);
+	t_game *game;
+
+	if(argc != 2)
+		handle_error(1, WRONG_ARGUMENTS);
+	game = init_game();
+	validate_map(argv[1], game);
+	return (0);
 }
 
 // int main(int argc, char **argv)

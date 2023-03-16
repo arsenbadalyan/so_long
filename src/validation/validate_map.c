@@ -1,19 +1,21 @@
 #include "so_long.h"
 
-void validate_map(char *file_name)
+void validate_map(char *file_name, t_game *game)
 {
 	int fd;
 	char *full_path;
+	char **map;
 
 	check_file_extention(file_name);
 	fd = file_access(file_name);
-	map_check_controller(file_name, fd);
+	map = map_check_controller(file_name, fd);
+	fill_map_controller(&map, game);
 }
 
 void check_file_extention(char *file_name)
 {
-	int		i;
 	char	**dot_split;
+	int		i;
 
 	i = 0;
 	dot_split = ft_split(file_name, '.');
@@ -37,13 +39,8 @@ void check_file_extention(char *file_name)
 int file_access(char *file_name)
 {
 	int fd;
-	char *full_path;
 
-	full_path = ft_strjoin(MAP_PATH, file_name);
-	if (!full_path)
-		catch_exception(12, 0);
-	fd = open(full_path, O_RDONLY);
-	free_single(&full_path);
+	fd = open(file_name, O_RDONLY);
 	if(fd == -1)
 		catch_exception(2, file_name);
 	return (fd);
