@@ -1,75 +1,96 @@
 #include "so_long.h"
 
-char **map_check_controller(char *file_name, int fd)
+char **map_check_controller(char *file_name, t_game *game, int fd)
 {
-	size_t	map_size;
+	char	*file_content;
 	char	**map;
 
-	map_size = check_map_size(fd, 0, 0);
+	file_content = read_file_content(fd);
 	close(fd);
-	fd = file_access(file_name);
-	map = fill_map(map_size, fd);
+	if(!file_content)
+		return (NULL);
+	map = validate_file_content(file_content, game);
+	validate_map_size(map, game);
 	if(validate_walls(map))
 	{
 		free_double(&map);
+		free_game(&game);
 		handle_error(1, WRONG_WALL_CONF);
 	}
 	return (map);
 }
 
-char **fill_map(size_t map_size, int fd)
+char *read_file_content(int fd)
 {
 	char *line;
-	char **map;
-	size_t i;
+	char *full;
+	char *temp;
 
-	i = 0;
-	map = (char **)malloc(sizeof(char *) * (map_size + 1));
-	map[map_size] = NULL;
-	while(i < map_size)
+	full = ft_strdup("");
+	if(!full)
+		return (NULL);
+	while(1)
 	{
 		line = get_next_line(fd);
-		if(!line)
-		{
-			map[i] = NULL;
-			free_double(&map);
-			catch_exception(12, 0);
-		}
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		map[i] = line;
+		if(!line || (!line[0] && !free_single(&line)))
+			break;
+		temp = full;
+		full = ft_strjoin(full, line);
+		if (!free_single(&line) && !free_single(&temp) && !full)
+			return (NULL);
+	}
+	temp = full;
+	full = ft_strtrim(full, "\n");
+	if(!free_single(&temp) && !full)
+		return (NULL);
+	if(!ft_strlen(full) && !free_single(&full))
+		return (NULL);
+	return (full);
+}
+
+char **validate_file_content(char *file_content, t_game *game)
+{
+	size_t i;
+	char **map;
+
+	i = 0;
+	while(file_content[i])
+	{
+		if(file_content[i] == '\n' && file_content[i + 1] == '\n')
+			return ((char **)free_single(&file_content));
 		i++;
+	}
+	map = ft_split(file_content, '\n');
+	if(!map || !map[0] || !map[1] || !map[2])
+	{
+		free_game(&game);
+		free_single(&file_content);
+		if(!map)
+			catch_exception(12, 0);
+		free_double(&map);
+		handle_error(1, WRONG_MAP_CONF);
 	}
 	return (map);
 }
 
-size_t check_map_size(int fd, size_t size, size_t length)
+void validate_map_size(char **map, t_game *game)
 {
-	char *line;
+	size_t	size;
+	size_t first_line_size;
 
-	while(1)
+	size = 0;
+	while(map[size])
 	{
-		line = get_next_line(fd);
-		if(!line)
-			break;
-		if(line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		if (!size && ft_strlen(line) < 3)
-			free_line_and_exit(&line);
-		if (!size)
-			length = ft_strlen(line);
-		if(size && ft_strlen(line) != length)
-			free_line_and_exit(&line);
-		free_single(&line);
+		if(size == 0)
+			first_line_size = ft_strlen(map[size]);
+		if(first_line_size < 3 || ft_strlen(map[size]) != first_line_size)
+		{
+			free_double(&map);
+			free_game(&game);
+			handle_error(1, WRONG_MAP_CONF);
+		}
 		size++;
 	}
-	if(size < 3)
-		handle_error(1, WRONG_MAP_CONF);
-	return (size);
-}
-
-void free_line_and_exit(char **line)
-{
-	free_single(line);
-	handle_error(1, WRONG_MAP_CONF);
+	game->map->x_size = first_line_size;
+	game->map->y_size = size;
 }

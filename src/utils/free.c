@@ -26,3 +26,17 @@ char *free_double(char ***addr)
 	}
 	return (0);
 }
+
+char *free_game(t_game **game)
+{
+	t_game *gm;
+
+	gm = *game;
+	if(gm)
+		return (0);
+	free_double(&gm->map->map);
+	free(gm->map);
+	free(gm->mlx);
+	free(gm);
+	return (0);
+}

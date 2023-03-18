@@ -42,13 +42,13 @@ t_map *init_map()
 	map->map = NULL;
 	map->x = 0;
 	map->y = 0;
-	map->coins = 0;
+	map->x_size = 0;
+	map->y_size = 0;
+	map->coin = 0;
 	map->player[0] = 0;
 	map->player[1] = 0;
-	map->enemy[0] = 0;
-	map->enemy[1] = 0;
-	map->exit[0] = 0;
-	map->exit[1] = 0;
+	map->enemy = 0;
+	map->exit = 0;
 
 	return (map);
 }
