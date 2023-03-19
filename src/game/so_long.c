@@ -8,6 +8,8 @@ int main(int argc, char **argv)
 		handle_error(1, WRONG_ARGUMENTS);
 	game = init_game();
 	validate_map(argv[1], game);
+	game_controller(game);
+	// system("leaks so_long");
 	return (0);
 }
 

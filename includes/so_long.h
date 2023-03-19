@@ -17,6 +17,10 @@
 #define GAME_NAME "so_long"
 #define CORRECT_C "10PECV"
 
+// Window
+#define WIDTH  64
+#define HEIGHT 64
+
 // Flags
 #define PLAYER_FLAG 'P'
 #define EXIT_FLAG   'E'
@@ -31,13 +35,18 @@
 #define WRONG_MAP_CONF  "wmc"
 #define WRONG_WALL_CONF "wwc"
 #define WRONG_PE_CONF   "wpe"
-#define WRONG_WAY_CONF  "wwc"
+#define WRONG_WAY_CONF  "wwf"
 // Functions
 
 // Initalization
 t_game *init_game();
 t_mlx *init_mlx();
 t_map *init_map();
+
+// Game
+void game_controller(t_game *game);
+void start_mlx(t_game *game);
+int draw_map(t_game *game);
 
 // Validations
 void validate_map(char *file_name, t_game *game);
@@ -48,8 +57,8 @@ char **validate_file_content(char *file_content, t_game *game);
 void validate_map_size(char **map, t_game *game);
 int validate_walls(char **map);
 int check_wall(char *map_line, int is_centre);
-void fill_map_controller(char ***map, t_game *game);
-int	find_characters(char ***map, t_game *game, size_t *xy, char find);
+void fill_map_controller(char **map, t_game *game);
+int	find_characters(char **map, t_game *game, size_t *xy, char find);
 int find_game_paths(t_game *game);
 void fill_flood_map(t_map *map, size_t begin_x, size_t begin_y);
 

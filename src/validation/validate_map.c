@@ -19,7 +19,7 @@ void validate_map(char *file_name, t_game *game)
 		free_game(&game);
 		handle_error(1, "idn");
 	}
-	fill_map_controller(&map, game);
+	fill_map_controller(map, game);
 }
 
 void check_file_extention(char *file_name, t_game *game)

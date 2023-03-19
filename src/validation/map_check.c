@@ -10,6 +10,7 @@ char **map_check_controller(char *file_name, t_game *game, int fd)
 	if(!file_content)
 		return (NULL);
 	map = validate_file_content(file_content, game);
+	free_single(&file_content);
 	validate_map_size(map, game);
 	if(validate_walls(map))
 	{

@@ -32,7 +32,7 @@ char *free_game(t_game **game)
 	t_game *gm;
 
 	gm = *game;
-	if(gm)
+	if(!gm)
 		return (0);
 	free_double(&gm->map->map);
 	free(gm->map);

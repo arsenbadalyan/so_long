@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void fill_map_controller(char ***map, t_game *game)
+void fill_map_controller(char **map, t_game *game)
 {
 	size_t empty[2];
 
@@ -9,13 +9,13 @@ void fill_map_controller(char ***map, t_game *game)
 	game->map->exit = find_characters(map, game, empty, EXIT_FLAG);
 	if(find_characters(map, game, empty, PLAYER_FLAG) != 1 || game->map->exit != 1)
 	{
-		free_double(map);
+		free_double(&map);
 		free_game(&game);
 		handle_error(1, WRONG_PE_CONF);
 	}
 	game->map->coin = find_characters(map, game, empty, COIN_FLAG);
 	game->map->enemy = find_characters(map, game, empty, ENEMY_FLAG);
-	game->map->map = *map;
+	game->map->map = map;
 	if(find_game_paths(game))
 	{
 		free_game(&game);
@@ -23,19 +23,19 @@ void fill_map_controller(char ***map, t_game *game)
 	}
 }
 
-int	find_characters(char ***map, t_game *game, size_t *xy, char find)
+int	find_characters(char **map, t_game *game, size_t *xy, char find)
 {
 	size_t	counter;
 
 	counter = 0;
-	while ((*map)[xy[1]])
+	while (map[xy[1]])
 	{
 		xy[0] = 0;
-		while ((*map)[xy[1]][xy[0]])
+		while (map[xy[1]][xy[0]])
 		{
-			if (!ft_strchr(CORRECT_C, (*map)[xy[1]][xy[0]]))
+			if (!ft_strchr(CORRECT_C, map[xy[1]][xy[0]]))
 				return (-1);
-			if ((*map)[xy[1]][xy[0]] == find && ++counter
+			if (map[xy[1]][xy[0]] == find && ++counter
 				&& find == PLAYER_FLAG)
 			{
 				game->map->player[0] = xy[0];
@@ -62,11 +62,13 @@ int find_game_paths(t_game *game)
 	if(!temp_map->map)
 	{
 		free(temp_map);
-		return (1);		
+		return (1);
 	}
 	fill_flood_map(temp_map, game->map->player[0], game->map->player[1]);
 	if(game->map->coin != temp_map->coin || game->map->exit != temp_map->exit)
 		return (1);
+	free_double(&temp_map->map);
+	free(temp_map);
 	return (0);
 }
 

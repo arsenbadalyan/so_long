@@ -33,7 +33,7 @@ GREEN  = \033[32m
 YELLOW = \033[33m
 BLUE   = \033[34m
 
-
+# @$(GCC) $(CFLAGS) $(LIBS) -L$(MLX_DIR) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 
 all: $(NAME)
 
@@ -42,7 +42,7 @@ bonus: all
 $(NAME): Makefile WAIT_COMPILE_MSG $(OBJS)
 	@echo "${GREEN}-> Compiling LIBFT...${RESET}"
 	@make -C $(LIBFT_DIR) all
-	@$(GCC) $(CFLAGS) $(LIBS) -L$(MLX_DIR) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
+	@$(GCC) $(CFLAGS) $(LIBS) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 	@make DONE_MSG
 
 $(OBJ)/%.o: $(SRC)/%.c
