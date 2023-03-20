@@ -58,11 +58,14 @@ char **validate_file_content(char *file_content, t_game *game)
 	while(file_content[i])
 	{
 		if(file_content[i] == '\n' && file_content[i + 1] == '\n')
-			return ((char **)free_single(&file_content));
+		{
+			i = 0;
+			break;
+		}
 		i++;
 	}
 	map = ft_split(file_content, '\n');
-	if(!map || !map[0] || !map[1] || !map[2])
+	if(!i || !map || !map[0] || !map[1] || !map[2])
 	{
 		free_game(&game);
 		free_single(&file_content);

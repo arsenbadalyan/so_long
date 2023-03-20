@@ -42,7 +42,7 @@ bonus: all
 $(NAME): Makefile WAIT_COMPILE_MSG $(OBJS)
 	@echo "${GREEN}-> Compiling LIBFT...${RESET}"
 	@make -C $(LIBFT_DIR) all
-	@$(GCC) $(CFLAGS) $(LIBS) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
+	@$(GCC) $(CFLAGS) $(LIBS) -L$(MLX_DIR) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 	@make DONE_MSG
 
 $(OBJ)/%.o: $(SRC)/%.c

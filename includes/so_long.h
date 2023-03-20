@@ -13,22 +13,6 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-// General Defines
-#define GAME_NAME "so_long"
-#define CORRECT_C "10PECV"
-
-// Window
-#define WIDTH  64
-#define HEIGHT 64
-
-// Flags
-#define PLAYER_FLAG 'P'
-#define EXIT_FLAG   'E'
-#define ENEMY_FLAG  'V'
-#define WALL_FLAG   '1'
-#define SPACE_FLAG  '0'
-#define COIN_FLAG   'C'
-
 // Error type defines
 #define WRONG_EXTENTION "wfe"
 #define WRONG_ARGUMENTS "wae"
@@ -36,17 +20,31 @@
 #define WRONG_WALL_CONF "wwc"
 #define WRONG_PE_CONF   "wpe"
 #define WRONG_WAY_CONF  "wwf"
+
 // Functions
 
 // Initalization
 t_game *init_game();
 t_mlx *init_mlx();
 t_map *init_map();
+t_status *init_status();
 
 // Game
 void game_controller(t_game *game);
 void start_mlx(t_game *game);
+int exit_game(t_game *game);
+
+// Draw functions
 int draw_map(t_game *game);
+void draw_lose(t_game *game, int w, int h);
+void *draw_sprite(t_game *game, char segment, int w, int h);
+char *draw_addn(t_game *game, char *fpath, int max_anim, size_t *status);
+void sprite_manipulation(t_game *game, char **map, int i);
+
+// Moves
+int pass_key(int key, t_game *game);
+void do_move(t_game *game, char **map, int x, int y);
+void player_lose(t_game *game, char **map, int x, int y);
 
 // Validations
 void validate_map(char *file_name, t_game *game);

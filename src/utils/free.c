@@ -37,6 +37,7 @@ char *free_game(t_game **game)
 	free_double(&gm->map->map);
 	free(gm->map);
 	free(gm->mlx);
+	free(gm->status);
 	free(gm);
 	return (0);
 }
