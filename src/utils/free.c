@@ -1,8 +1,8 @@
 #include "so_long.h"
 
-char *free_single(char **addr)
+char	*free_single(char **addr)
 {
-	if(*addr)
+	if (*addr)
 	{
 		free(*addr);
 		*addr = 0;
@@ -10,14 +10,14 @@ char *free_single(char **addr)
 	return (0);
 }
 
-char *free_double(char ***addr)
+char	*free_double(char ***addr)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(*addr)
+	if (*addr)
 	{
-		while((*addr)[i])
+		while ((*addr)[i])
 		{
 			free((*addr)[i]);
 			i++;
@@ -27,12 +27,12 @@ char *free_double(char ***addr)
 	return (0);
 }
 
-char *free_game(t_game **game)
+char	*free_game(t_game **game)
 {
-	t_game *gm;
+	t_game	*gm;
 
 	gm = *game;
-	if(!gm)
+	if (!gm)
 		return (0);
 	free_double(&gm->map->map);
 	free(gm->map);

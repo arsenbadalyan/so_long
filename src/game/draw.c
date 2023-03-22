@@ -1,17 +1,17 @@
 #include "so_long.h"
 
-int draw_map(t_game *game)
+int	draw_map(t_game *game)
 {
-	void *sprite;
-	char **map;
-	int i;
+	char	**map;
+	int		i;
 
-	if(game->status->is_lose)
-		draw_lose(game, 0, 0);
+	if (game->status->is_lose)
+		draw_lose(game);
 	i = 0;
 	map = game->map->map;
 	mlx_clear_window(game->mlx->mlx, game->mlx->win);
-	if(game->status->loop++ == GAME_SPEED)
+	count_moves(game);
+	if (game->status->loop++ == GAME_SPEED)
 		game->status->loop = 0;
 	while (map[i])
 	{
@@ -21,17 +21,17 @@ int draw_map(t_game *game)
 	return (0);
 }
 
-void draw_lose(t_game *game, int w, int h)
+void	draw_lose(t_game *game)
 {
 	if (game->status->loop_lose == 100)
 		exit_game(game);
 	game->status->loop_lose += 1;
 }
 
-void sprite_manipulation(t_game *game, char **map, int i)
+void	sprite_manipulation(t_game *game, char **map, int i)
 {
-	int j;
-	void *sprite;
+	int		j;
+	void	*sprite;
 
 	j = 0;
 	while (map[i][j])
@@ -50,10 +50,10 @@ void sprite_manipulation(t_game *game, char **map, int i)
 	}
 }
 
-void *draw_sprite(t_game *game, char segment, int w, int h)
+void	*draw_sprite(t_game *game, char segment, int w, int h)
 {
-	char *path;
-	void *sprite;
+	char	*path;
+	void	*sprite;
 
 	if (segment == WALL_FLAG)
 		path = ft_strjoin(WALL_PATH, "0.xpm");
@@ -69,25 +69,26 @@ void *draw_sprite(t_game *game, char segment, int w, int h)
 		path = ft_strjoin(EXIT_PATH, "1.xpm");
 	else if (segment == LOSE_FLAG)
 		path = ft_strdup(LOSE_PATH);
-	else path = NULL;
-	if(!path)
+	else
+		path = NULL;
+	if (!path)
 		return (NULL);
 	sprite = mlx_xpm_file_to_image(game->mlx->mlx, path, &w, &h);
 	free_single(&path);
 	return (sprite);
 }
 
-char *draw_addn(t_game *game, char *fpath, int max_anim, size_t *status)
+char	*draw_addn(t_game *game, char *fpath, int max_anim, size_t *status)
 {
-	char *integer;
-	char *ext;
-	char *path;
+	char	*integer;
+	char	*ext;
+	char	*path;
 
 	if (!ft_strcmp(fpath, ENEMY_PATH) && game->status->loop == GAME_SPEED)
 		*status += 1;
 	else if (game->status->loop == GAME_SPEED)
 		*status += 1;
-	if (*status >= max_anim)
+	if (*status >= (size_t)max_anim)
 		*status = 0;
 	integer = ft_itoa(*status);
 	ext = ft_strjoin(integer, ".xpm");

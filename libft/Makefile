@@ -25,6 +25,7 @@ RESET  = \033[0m
 GREEN  = \033[32m
 BLUE   = \033[34m
 
+
 # Rules
 all: $(NAME)
 	@echo ""
@@ -33,8 +34,8 @@ $(NAME): Makefile $(OBJ)
 	@$(AR) $@ $(OBJ)
 	@$(RUN) $@
 
-%.o: %.c
-	@echo "${BLUE}Compiling $^${RESET}"
+%.o: %.c ../includes/libft.h
+	@echo "${BLUE}Compiling $<${RESET}"
 	@$(CC) $(FLAGS) $(LIBS) -c $< -o $@
 
 clean:

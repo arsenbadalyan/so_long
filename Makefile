@@ -1,11 +1,11 @@
 # Main Variables
-NAME   = so_long
-GCC    = cc
-CFLAGS = 
-# CFLAGS = -Wall -Wextra -Werror
-RM     = rm -rf
-OUTPUT = ./$(NAME)
-LIBS   = -I./includes/ -I./mlx/
+NAME     = so_long
+GCC      = cc
+CFLAGS   = -Wall -Wextra -Werror
+RM       = rm -rf
+OUTPUT   = ./$(NAME)
+LIBS     = -I./includes/ -I./mlx/
+LIBS_DIR = includes
 
 # Compiled directories
 SRC = src
@@ -19,6 +19,7 @@ OBJ_DIR = $(foreach dir, $(SUBDIRS), $(addprefix $(OBJ)/, $(dir)))
 # File directions
 SRCS = $(foreach dir, $(SRC_DIR), $(wildcard $(dir)/*.c))
 OBJS = $(subst $(SRC), $(OBJ), $(SRCS:.c=.o))
+LIB_DIR = $(foreach dir, $(LIBS_DIR), $(wildcard $(dir)/*.h))
 
 # Libft
 LIBFT     = ft
@@ -39,15 +40,15 @@ all: $(NAME)
 
 bonus: all
 
-$(NAME): Makefile WAIT_COMPILE_MSG $(OBJS)
+$(NAME): $(LIB_DIR) Makefile WAIT_COMPILE_MSG $(OBJS)
 	@echo "${GREEN}-> Compiling LIBFT...${RESET}"
 	@make -C $(LIBFT_DIR) all
 	@$(GCC) $(CFLAGS) $(LIBS) -L$(MLX_DIR) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 	@make DONE_MSG
 
-$(OBJ)/%.o: $(SRC)/%.c
+$(OBJ)/%.o: $(SRC)/%.c $(LIB_DIR)
 	@mkdir -p $(OBJ) $(OBJ_DIR)
-	@echo "${YELLOW}Compiling $^${RESET}"
+	@echo "${YELLOW}Compiling $<${RESET}"
 	@$(GCC) $(CFLAGS) $(LIBS) -c $< -o $@
 
 clean: DELETE_OBJ_MSG

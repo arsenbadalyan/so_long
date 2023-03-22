@@ -1,16 +1,16 @@
 #include "so_long.h"
 
-t_game *init_game()
+t_game	*init_game(void)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)malloc(sizeof(t_game));
-	if(!game)
+	if (!game)
 		catch_exception(12, 0);
 	game->mlx = init_mlx();
 	game->map = init_map();
 	game->status = init_status();
-	if(!game->mlx || !game->map || !game->status)
+	if (!game->mlx || !game->map || !game->status)
 	{
 		free(game->mlx);
 		free(game->map);
@@ -21,25 +21,24 @@ t_game *init_game()
 	return (game);
 }
 
-t_mlx *init_mlx()
+t_mlx	*init_mlx(void)
 {
-	t_mlx *mlx;
+	t_mlx	*mlx;
 
 	mlx = (t_mlx *)malloc(sizeof(t_mlx));
-	if(!mlx)
+	if (!mlx)
 		return (NULL);
 	mlx->mlx = NULL;
 	mlx->win = NULL;
-
 	return (mlx);
 }
 
-t_map *init_map()
+t_map	*init_map(void)
 {
-	t_map *map;
+	t_map	*map;
 
 	map = (t_map *)malloc(sizeof(t_map));
-	if(!map)
+	if (!map)
 		return (NULL);
 	map->map = NULL;
 	map->x = 0;
@@ -55,9 +54,9 @@ t_map *init_map()
 	return (map);
 }
 
-t_status *init_status()
+t_status	*init_status(void)
 {
-	t_status *status;
+	t_status	*status;
 
 	status = (t_status *)malloc(sizeof(t_status));
 	if (!status)
@@ -68,6 +67,6 @@ t_status *init_status()
 	status->loop = 0;
 	status->is_lose = 0;
 	status->loop_lose = 0;
-
+	status->move_counter = 0;
 	return (status);
 }
