@@ -28,7 +28,7 @@ BLUE   = \033[34m
 
 # Rules
 all: $(NAME)
-	@echo ""
+	@echo > /dev/null
 
 $(NAME): Makefile $(OBJ)
 	@$(AR) $@ $(OBJ)

@@ -66,7 +66,11 @@ int	find_game_paths(t_game *game)
 	}
 	fill_flood_map(temp_map, game->map->player[0], game->map->player[1]);
 	if (game->map->coin != temp_map->coin || game->map->exit != temp_map->exit)
+	{
+		free_double(&temp_map->map);
+		free(temp_map);
 		return (1);
+	}
 	free_double(&temp_map->map);
 	free(temp_map);
 	return (0);

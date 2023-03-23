@@ -3,7 +3,7 @@
 
 // General Defines
 # define GAME_NAME "so_long"
-# define GAME_SPEED 20
+# define GAME_SPEED 10
 # define CORRECT_C "10PECV"
 # define HAVE_ACCESS "0CE"
 

@@ -1,6 +1,6 @@
 # Main Variables
 NAME     = so_long
-GCC      = cc
+GCC      = gcc
 CFLAGS   = -Wall -Wextra -Werror
 RM       = rm -rf
 OUTPUT   = ./$(NAME)
@@ -37,13 +37,15 @@ BLUE   = \033[34m
 # @$(GCC) $(CFLAGS) $(LIBS) -L$(MLX_DIR) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 
 all: $(NAME)
+	@echo > /dev/null
 
 bonus: all
 
-$(NAME): $(LIB_DIR) Makefile WAIT_COMPILE_MSG $(OBJS)
+$(NAME): $(LIB_DIR) Makefile $(OBJS)
+	@make WAIT_COMPILE_MSG
 	@echo "${GREEN}-> Compiling LIBFT...${RESET}"
 	@make -C $(LIBFT_DIR) all
-	@$(GCC) $(CFLAGS) $(LIBS) -L$(MLX_DIR) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
+	@$(GCC) -g $(CFLAGS) $(LIBS) -L$(MLX_DIR) -l$(MLX) -L$(LIBFT_DIR) -l$(LIBFT) -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 	@make DONE_MSG
 
 $(OBJ)/%.o: $(SRC)/%.c $(LIB_DIR)

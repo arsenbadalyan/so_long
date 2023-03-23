@@ -4,9 +4,16 @@ void	game_controller(t_game *game)
 {
 	size_t	width_size;
 	size_t	height_size;
+	size_t	i;
 
+	i = 0;
 	game->sprites = (void **)malloc(sizeof(void *)
 			* (game->map->x_size * game->map->y_size));
+	while (i < (game->map->x_size * game->map->y_size))
+	{
+		game->sprites[i] = 0;
+		i++;
+	}
 	game->mlx->mlx = mlx_init();
 	width_size = game->map->x_size * HEIGHT;
 	height_size = game->map->y_size * WIDTH;
